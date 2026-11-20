@@ -326,7 +326,7 @@ private fun EntryRow(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    if (entry.isDirectory) Icons.Outlined.Folder else Icons.Outlined.Inventory2,
+                    if (entry.isDirectory) Icons.Outlined.Folder else Icons.Outlined.Description,
                     contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.size(17.dp),

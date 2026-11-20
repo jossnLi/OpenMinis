@@ -437,7 +437,7 @@ private fun EmptyMcpsCard() {
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Icon(
-                Icons.Outlined.Extension,
+                Icons.Outlined.Dashboard,
                 contentDescription = null,
                 modifier = Modifier.size(36.dp),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),

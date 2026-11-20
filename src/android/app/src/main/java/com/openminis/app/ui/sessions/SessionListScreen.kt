@@ -65,7 +65,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.AddComment
 import androidx.compose.material.icons.outlined.Delete
@@ -208,7 +208,7 @@ private fun categoryStyle(category: String?): CategoryStyle {
         "research"     -> CategoryStyle(Icons.Outlined.Language, Color(0xFF30B0C7))
         "analysis"     -> CategoryStyle(Icons.Outlined.BarChart, Color(0xFF5856D6))
         "creative"     -> CategoryStyle(Icons.Outlined.Brush, Color(0xFFFF2D55))
-        "chat"         -> CategoryStyle(Icons.Outlined.Forum, Color(0xFF34C759))
+        "chat"         -> CategoryStyle(Icons.Outlined.Chat, Color(0xFF34C759))
         "math"         -> CategoryStyle(Icons.Outlined.Calculate, Color(0xFF9B59B6))
         "translation"  -> CategoryStyle(Icons.Outlined.Translate, Color(0xFF00BCD4))
         "health"       -> CategoryStyle(Icons.Outlined.Favorite, Color(0xFFFF3B30))
@@ -217,9 +217,9 @@ private fun categoryStyle(category: String?): CategoryStyle {
         "education"    -> CategoryStyle(Icons.Outlined.Book, Color(0xFF3478F6))
         "design"       -> CategoryStyle(Icons.Outlined.Palette, Color(0xFFFF2D55))
         "productivity" -> CategoryStyle(Icons.Outlined.CalendarMonth, Color(0xFFFFCC00))
-        "support"      -> CategoryStyle(Icons.Outlined.Settings, Color(0xFF8B6914))
+        "support"      -> CategoryStyle(Icons.Outlined.Tune, Color(0xFF8B6914))
         "other"        -> CategoryStyle(Icons.Outlined.GridView, Color(0xFF8E8E93))
-        else           -> CategoryStyle(Icons.Outlined.Forum, Color(0xFF8E8E93))
+        else           -> CategoryStyle(Icons.Outlined.Chat, Color(0xFF8E8E93))
     }
 }
 
@@ -1011,7 +1011,7 @@ fun SessionListScreen(
                                 null
                             },
                         ) {
-                            Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.sessionlist_settings))
+                            Icon(Icons.Filled.Tune, contentDescription = stringResource(R.string.sessionlist_settings))
                         }
                     }
                 },
@@ -1088,7 +1088,7 @@ fun SessionListScreen(
                                         onRootfsClick()
                                     },
                                     leadingIcon = {
-                                        Icon(Icons.Outlined.Settings, contentDescription = null)
+                                        Icon(Icons.Outlined.Tune, contentDescription = null)
                                     },
                                 )
                                 MinisMenuDivider()
@@ -1110,7 +1110,7 @@ fun SessionListScreen(
                                         showBrowserSettings = true
                                     },
                                     leadingIcon = {
-                                        Icon(Icons.Outlined.Settings, contentDescription = null)
+                                        Icon(Icons.Outlined.Tune, contentDescription = null)
                                     },
                                 )
                             }
@@ -1903,7 +1903,7 @@ private fun DualFabRow(
                     ),
                 elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 4.dp),
             ) {
-                Icon(Icons.Outlined.Forum, contentDescription = "New Chat", tint = Color.White, modifier = Modifier.size(24.dp))
+                Icon(Icons.Outlined.AddComment, contentDescription = "New Chat", tint = Color.White, modifier = Modifier.size(24.dp))
             }
             DropdownMenu(
                 expanded = showGroupMenu,
@@ -1912,7 +1912,7 @@ private fun DualFabRow(
                 topGroups.forEach { group ->
                     DropdownMenuItem(
                         text = { Text(group.name) },
-                        leadingIcon = { Icon(Icons.Outlined.Forum, contentDescription = null) },
+                        leadingIcon = { Icon(Icons.Outlined.AddComment, contentDescription = null) },
                         onClick = {
                             showGroupMenu = false
                             onNewChatWithGroup(group.id)

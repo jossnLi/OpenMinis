@@ -447,7 +447,7 @@ fun ModelGroupDetailScreen(
                                 group.copy(defaultThinkingLevel = newLevel)
                             )
                         },
-                        icon = Icons.Default.Psychology,
+                        icon = Icons.Default.Memory,
                         iconColor = Color(0xFFAF52DE),
                         showDivider = reasoningEnabled,
                     )

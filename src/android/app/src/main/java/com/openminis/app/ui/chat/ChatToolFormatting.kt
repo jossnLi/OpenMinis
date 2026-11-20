@@ -75,7 +75,7 @@ internal fun toolIconFor(toolName: String) = when (toolName) {
     "file_edit" -> Icons.Default.EditNote             // iOS: square.and.pencil
     "browser_use" -> Icons.Default.Language            // iOS: globe
     "read_image" -> Icons.Default.Image                // iOS: photo
-    "memory_write", "memory_get" -> Icons.Default.Psychology // iOS: brain.head.profile
+    "memory_write", "memory_get" -> Icons.Default.Memory     // brain.head.profile
     "web_search" -> Icons.Default.Search               // iOS: magnifyingglass
     "subagent_task", "delegate_task", "agent_status" -> Icons.Default.Groups  // iOS: person.2.wave.2
     else -> Icons.Default.Build

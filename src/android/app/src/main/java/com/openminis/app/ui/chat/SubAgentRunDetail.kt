@@ -579,7 +579,7 @@ private fun TimelineRow(call: SubAgentRunDigest.Call) {
 /** What the sub agent last wrote, while it runs (the block itself only carries a progress line). */
 @Composable
 internal fun SubAgentLatestOutputCard(text: String) {
-    AgentDetailCard(title = stringResource(R.string.subagent_detail_latest_output), icon = Icons.Default.ChatBubbleOutline) {
+    AgentDetailCard(title = stringResource(R.string.subagent_detail_latest_output), icon = Icons.Default.Chat) {
         SubAgentCollapsibleText(text)
     }
 }

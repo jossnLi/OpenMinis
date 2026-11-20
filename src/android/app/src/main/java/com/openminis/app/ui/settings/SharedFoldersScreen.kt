@@ -206,7 +206,7 @@ internal object SharedFolderRegistry {
             nameRes = R.string.shared_folder_name_memory,
             linuxPath = "/var/minis/memory",
             writable = false,
-            icon = Icons.Outlined.Psychology,
+            icon = Icons.Outlined.Memory,
             iconColor = Color(0xFFFF2D55),
         ),
     )

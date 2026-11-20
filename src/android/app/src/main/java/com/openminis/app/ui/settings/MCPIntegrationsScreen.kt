@@ -115,7 +115,7 @@ fun MCPIntegrationsScreen(
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     Icon(
-                        Icons.Outlined.Extension,
+                        Icons.Outlined.Dashboard,
                         contentDescription = null,
                         modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),

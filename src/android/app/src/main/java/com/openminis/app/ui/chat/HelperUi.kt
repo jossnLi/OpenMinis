@@ -684,7 +684,7 @@ private fun ThinkingLevelPill(level: ThinkingLevel) {
             .padding(horizontal = 5.dp, vertical = 1.dp),
     ) {
         Icon(
-            Icons.Default.Psychology, contentDescription = null,
+            Icons.Default.Memory, contentDescription = null,
             tint = ChatColors.secondaryText, modifier = Modifier.size(9.dp),
         )
         Text(

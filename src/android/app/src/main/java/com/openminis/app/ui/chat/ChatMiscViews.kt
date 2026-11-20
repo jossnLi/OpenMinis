@@ -558,7 +558,7 @@ internal fun FallbackInfoBlock(block: AssistantBlock, onRevert: (() -> Unit)? = 
         // pre-date the dedicated compactor) keep the squeeze for backward
         // visual continuity if any old sessions still hold them.
         "compact" -> Icons.Default.CloseFullscreen
-        "memory" -> Icons.Default.Psychology
+        "memory" -> Icons.Default.Memory
         "thinking" -> Icons.Default.Lightbulb
         else -> Icons.Default.Info
     }

@@ -1878,10 +1878,10 @@ internal fun categoryNameRes(cat: BackupCategory): Int = when (cat) {
  * nearest Compose Material icon).
  */
 private fun categoryIcon(cat: BackupCategory): ImageVector = when (cat) {
-    BackupCategory.CHATS -> Icons.Outlined.Forum                 // bubble.left.and.bubble.right
+    BackupCategory.CHATS -> Icons.Outlined.Chat                  // message
     BackupCategory.SHARED_FILES -> Icons.Outlined.Description    // doc.fill
-    BackupCategory.SKILLS -> Icons.Outlined.Extension            // puzzlepiece.fill
-    BackupCategory.MEMORY -> Icons.Outlined.Psychology           // brain.head.profile
+    BackupCategory.SKILLS -> Icons.Outlined.Dashboard            // puzzlepiece
+    BackupCategory.MEMORY -> Icons.Outlined.Memory               // brain.head.profile
     BackupCategory.PROVIDERS -> Icons.Outlined.Link              // link
     BackupCategory.MCP_SERVERS -> Icons.Outlined.Layers          // square.stack.3d.up.fill
     BackupCategory.ENVIRONMENT_VARIABLES -> Icons.Outlined.Terminal // terminal.fill

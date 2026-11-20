@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.outlined.Bolt
 import androidx.compose.material.icons.outlined.BrightnessAuto
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
+import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.FormatSize
@@ -361,7 +362,8 @@ fun AppearanceScreen(
             val launchRows = listOf(
                 LaunchRow(stringResource(R.string.appearance_launch_auto), Icons.Outlined.Bolt, tileBlue),
                 LaunchRow(stringResource(R.string.appearance_launch_last), Icons.Outlined.History, tileTeal),
-                LaunchRow(stringResource(R.string.appearance_launch_new), Icons.Outlined.ChatBubbleOutline, tileGreen),
+                LaunchRow(stringResource(R.string.appearance_launch_new), Icons.Outlined.Chat, tileGreen),
+                // Use Chat for consistency
                 LaunchRow(stringResource(R.string.appearance_launch_home), Icons.Outlined.Home, tileBlue),
             )
             launchRows.forEachIndexed { idx, row ->
@@ -495,7 +497,7 @@ fun AppearanceScreen(
             footer = stringResource(R.string.appearance_auto_expand_thinking_footer),
         ) {
             SettingsSwitchRow(
-                icon = Icons.Outlined.Psychology,
+                icon = Icons.Outlined.Memory,
                 iconColor = tilePurple,
                 title = stringResource(R.string.appearance_auto_expand_thinking_title),
                 checked = autoExpandThinking,
@@ -556,7 +558,7 @@ fun AppearanceScreen(
             footer = stringResource(R.string.appearance_show_chat_title_footer),
         ) {
             SettingsSwitchRow(
-                icon = Icons.Outlined.ChatBubbleOutline,
+                icon = Icons.Outlined.Chat,
                 iconColor = tileBlue,
                 title = stringResource(R.string.appearance_show_chat_title),
                 subtitle = stringResource(R.string.appearance_show_chat_title_subtitle),

@@ -1198,7 +1198,7 @@ internal fun ThinkingBlock(block: AssistantBlock, isStreaming: Boolean, isLast: 
                 Spacer(modifier = Modifier.width(6.dp))
             } else {
                 Icon(
-                    imageVector = Icons.Default.Psychology,
+                    imageVector = Icons.Default.Memory,
                     contentDescription = null,
                     tint = thinkingBlue,
                     modifier = Modifier.size(14.dp),

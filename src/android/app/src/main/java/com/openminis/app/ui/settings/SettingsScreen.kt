@@ -47,6 +47,7 @@ import androidx.compose.material.icons.outlined.Handyman
 import androidx.compose.material.icons.outlined.Psychology
 import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -160,7 +161,7 @@ fun SettingsScreen(
                     onClick = onProvidersClick,
                 )
                 SettingsItem(
-                    icon = Icons.Outlined.Settings,
+                    icon = Icons.Outlined.Tune,
                     iconColor = Color(0xFF007AFF),
                     title = stringResource(R.string.settings_model_groups),
                     subtitle = stringResource(R.string.settings_model_groups_subtitle),
@@ -216,7 +217,7 @@ fun SettingsScreen(
                     onClick = onAgentsClick,
                 )
                 SettingsItem(
-                    icon = Icons.Outlined.Extension,
+                    icon = Icons.Outlined.Dashboard,
                     iconColor = Color(0xFF007AFF),
                     title = stringResource(R.string.settings_skills),
                     subtitle = stringResource(R.string.settings_skills_subtitle),
@@ -231,7 +232,7 @@ fun SettingsScreen(
                     onClick = onSoulClick,
                 )
                 SettingsItem(
-                    icon = Icons.Outlined.Psychology,
+                    icon = Icons.Outlined.Memory,
                     iconColor = Color(0xFF5856D6),
                     title = stringResource(R.string.settings_memory),
                     subtitle = stringResource(R.string.settings_memory_subtitle),
@@ -261,7 +262,7 @@ fun SettingsScreen(
             // -- Storage --
             SettingsSection(title = stringResource(R.string.settings_section_storage)) {
                 SettingsItem(
-                    icon = Icons.Outlined.Inventory2,
+                    icon = Icons.Outlined.Folder,
                     iconColor = Color(0xFF007AFF),
                     title = stringResource(R.string.settings_section_storage),
                     subtitle = stringResource(R.string.settings_storage_subtitle),

@@ -554,7 +554,7 @@ fun QuotaCircleIcon(icon: ImageVector, tint: Color, size: Int = 22) {
 fun scopeIcon(t: QuotaPoolBinding.Target): Pair<ImageVector, Color> = when (t) {
     QuotaPoolBinding.Target.Subject -> Icons.Filled.Group to Color(0xFF007AFF)
     is QuotaPoolBinding.Target.Model, is QuotaPoolBinding.Target.ModelFamily -> Icons.Filled.Memory to Color(0xFFAF52DE)
-    is QuotaPoolBinding.Target.Product -> Icons.Filled.Inventory2 to Color(0xFF5856D6)
+    is QuotaPoolBinding.Target.Product -> Icons.Filled.Archive to Color(0xFF5856D6)
 }
 
 /**

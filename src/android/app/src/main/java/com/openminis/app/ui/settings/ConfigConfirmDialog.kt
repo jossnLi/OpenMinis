@@ -240,7 +240,7 @@ private fun ConfirmRow(
             ConfigReadableDivider()
             Row(verticalAlignment = Alignment.Top, modifier = Modifier.padding(top = 2.dp)) {
                 Icon(
-                    imageVector = Icons.Outlined.ChatBubbleOutline,
+                    imageVector = Icons.Outlined.Chat,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 3.dp).height(14.dp).width(14.dp),

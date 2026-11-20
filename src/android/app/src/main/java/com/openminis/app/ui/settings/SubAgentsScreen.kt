@@ -386,7 +386,7 @@ fun SubAgentDetailScreen(agentId: String, onBack: () -> Unit) {
                     thinking = if (enabled) (thinking ?: ThinkingLevel.MEDIUM) else null
                     persist()
                 },
-                icon = Icons.Default.Psychology,
+                icon = Icons.Default.Memory,
                 iconColor = Color(0xFFAF52DE),
                 showDivider = on,
             )

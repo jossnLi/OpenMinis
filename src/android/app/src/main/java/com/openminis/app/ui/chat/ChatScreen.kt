@@ -3505,7 +3505,7 @@ fun ChatScreen(
                                         showSkillsSheet = true
                                     },
                                     leadingIcon = {
-                                        MenuItemIcon(Icons.Outlined.Extension)
+                                        MenuItemIcon(Icons.Outlined.Dashboard)
                                     },
                                 )
                             }
@@ -3531,7 +3531,7 @@ fun ChatScreen(
                                         viewModel.toggleMemorySheet()
                                     },
                                     leadingIcon = {
-                                        MenuItemIcon(Icons.Outlined.Psychology)
+                                        MenuItemIcon(Icons.Outlined.Memory)
                                     },
                                 )
                             }

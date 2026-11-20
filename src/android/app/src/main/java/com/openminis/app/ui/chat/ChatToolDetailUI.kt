@@ -1048,7 +1048,7 @@ internal fun ToolDetailSheet(
                             "Keywords: $keywords\n\n" else ""
                         EditorCard(
                             title = block.toolName,
-                            icon = Icons.Default.Psychology,
+                            icon = Icons.Default.Memory,
                             iconTint = ToolMemoryAccent.copy(alpha = 0.6f),
                             titleColor = ToolMemoryAccent,
                             sizeColor = ToolMemoryAccent.copy(alpha = 0.5f),

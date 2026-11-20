@@ -3791,7 +3791,7 @@ class ChatViewModel(
         ),
         SlashCommand(
             id = "memory",
-            icon = Icons.Default.Psychology,
+            icon = Icons.Default.Memory,
             title = "Memory",
             subtitle = "",
         ),

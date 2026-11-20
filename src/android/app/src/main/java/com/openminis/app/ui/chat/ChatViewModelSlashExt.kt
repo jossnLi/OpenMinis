@@ -138,7 +138,7 @@ internal fun ChatViewModel.filteredSlashCommands(): List<SlashCommand> {
             val sub = if (trimmed.isNotEmpty()) trimmed else "Skill · v${skill.version}"
             SlashCommand(
                 id = "skill:${skill.id}",
-                icon = Icons.Outlined.Extension,
+                icon = Icons.Outlined.Dashboard,
                 title = skill.name,
                 subtitle = sub,
                 isSkill = true,

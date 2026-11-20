@@ -91,7 +91,7 @@ enum class MirrorCategory(
     val icon: ImageVector
         get() = when (this) {
             ALPINE -> Icons.Filled.Terrain
-            PIP -> Icons.Filled.Inventory2
+            PIP -> Icons.Filled.Archive
             NPM -> Icons.Outlined.Javascript
         }
 

@@ -545,7 +545,7 @@ private fun ChatShareFloatingActions(
                 )
                 ChatShareFloatingChip(
                     stringResource(if (hideThinking) R.string.chat_share_show_thinking else R.string.chat_share_hide_thinking),
-                    Icons.Outlined.Psychology, struck = hideThinking, onClick = onToggleThinking,
+                    Icons.Outlined.Memory, struck = hideThinking, onClick = onToggleThinking,
                 )
                 AnimatedVisibility(
                     visible = hasSelection,

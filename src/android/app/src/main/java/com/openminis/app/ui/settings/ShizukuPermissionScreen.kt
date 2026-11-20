@@ -251,7 +251,7 @@ private val ShizukuCapabilities: List<ShizukuCapability> = listOf(
     ShizukuCapability("permission", R.string.shizuku_cap_permission_desc, Icons.Default.Lock),
     ShizukuCapability("activity", R.string.shizuku_cap_activity_desc, Icons.Default.Launch),
     ShizukuCapability("display", R.string.shizuku_cap_display_desc, Icons.Default.Fullscreen),
-    ShizukuCapability("settings", R.string.shizuku_cap_settings_desc, Icons.Default.Settings),
+    ShizukuCapability("settings", R.string.shizuku_cap_settings_desc, Icons.Default.Tune),
     ShizukuCapability("user", R.string.shizuku_cap_user_desc, Icons.Default.Person),
     ShizukuCapability("network", R.string.shizuku_cap_network_desc, Icons.Default.Wifi),
     ShizukuCapability("input", R.string.shizuku_cap_input_desc, Icons.Default.TouchApp),
