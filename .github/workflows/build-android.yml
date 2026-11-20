@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     
     steps:
     - name: Checkout code
@@ -28,7 +29,6 @@ jobs:
       uses: actions/setup-go@v5
       with:
         go-version: '1.22'
-        cache: false
     
     - name: Install gomobile
       run: |
@@ -40,12 +40,12 @@ jobs:
     
     - name: Install NDK
       run: |
-        echo "y" | sdkmanager --install "ndk;28.0.12433566"
+        echo "y" | sdkmanager "ndk;28.0.12433566"
         echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/28.0.12433566" >> $GITHUB_ENV
     
     - name: Install CMake
       run: |
-        echo "y" | sdkmanager --install "cmake;3.22.1"
+        echo "y" | sdkmanager "cmake;3.22.1"
     
     - name: Install build dependencies
       run: |
@@ -75,10 +75,11 @@ jobs:
     - name: Build APK
       run: |
         cd src/android
-        ./gradlew :app:assembleRelease --no-daemon --stacktrace
+        ./gradlew assembleRelease --no-daemon --stacktrace
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
+      if: success()
       with:
         name: openminis-release-apk
         path: src/android/app/build/outputs/apk/release/*.apk
@@ -86,7 +87,9 @@ jobs:
     
     - name: Upload Debug Symbols
       uses: actions/upload-artifact@v4
+      if: success()
       with:
         name: openminis-debug-symbols
         path: src/android/app/build/outputs/native-debug-symbols/release/*.zip
         retention-days: 30
+        if-no-files-found: ignore
