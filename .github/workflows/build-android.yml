@@ -89,7 +89,7 @@ jobs:
       uses: actions/upload-artifact@v4
       if: success()
       with:
-        name: openminis-debug-symbols
+        name: openminis-release-apk-symbols
         path: src/android/app/build/outputs/native-debug-symbols/release/*.zip
         retention-days: 30
         if-no-files-found: ignore
