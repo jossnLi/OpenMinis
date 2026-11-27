@@ -20,6 +20,7 @@ import com.openminis.app.browser.BrowserActionInput
 import com.openminis.app.browser.BrowserTabPool
 import com.openminis.app.data.db.MessageEntity
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Dashboard
 import androidx.compose.material.icons.filled.Compress
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Lightbulb

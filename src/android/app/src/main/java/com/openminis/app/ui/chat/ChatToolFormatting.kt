@@ -3,6 +3,7 @@ package com.openminis.app.ui.chat
 import com.openminis.app.R
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.automirrored.filled.NoteAdd
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Description
