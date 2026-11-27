@@ -84,6 +84,30 @@ log_success() { echo -e "${GREEN}[build_proot] $1${NC}"; }
 log_warn()    { echo -e "${YELLOW}[build_proot] $1${NC}"; }
 log_error()   { echo -e "${RED}[build_proot] $1${NC}" >&2; exit 1; }
 
+# sha256 of a file, printed bare. Used only to compare against the pinned
+# loader hashes: `shasum` ships with macOS and is not guaranteed on every
+# Linux CI image (it comes from perl's Digest::SHA), while `sha256sum` is
+# coreutils and absent on macOS. Try each in turn so the verification below
+# never fails merely because the hasher is missing — a missing hasher used to
+# look exactly like a mismatched loader.
+sha256_of() {
+    local f="$1"
+    if [ ! -f "$f" ]; then
+        echo ""
+        return
+    fi
+    if command -v sha256sum >/dev/null 2>&1; then
+        sha256sum "$f" 2>/dev/null | awk '{print $1}'
+    elif command -v shasum >/dev/null 2>&1; then
+        shasum -a 256 "$f" 2>/dev/null | awk '{print $1}'
+    elif command -v openssl >/dev/null 2>&1; then
+        openssl dgst -sha256 "$f" 2>/dev/null | awk '{print $NF}'
+    else
+        echo ""
+    fi
+}
+
+
 # ----------------------------------------------------------------------------
 # Locate NDK + clang
 # ----------------------------------------------------------------------------
@@ -375,8 +399,8 @@ install_asset() {
     local want64="44ef39c1e1a18c09f6e4c4b5d6f8bba82d30596598bd155ec162d05c5122ff04"
     local want32="25f6bd90bc5a3d3088026289a0d3eaf3e502bd2b00e5cb74fadd9791132efa34"
     local have64 have32
-    have64=$(shasum -a 256 "$JNILIBS_DIR/libproot-loader.so" 2>/dev/null | awk '{print $1}')
-    have32=$(shasum -a 256 "$JNILIBS_DIR/libproot-loader32.so" 2>/dev/null | awk '{print $1}')
+    have64=$(sha256_of "$JNILIBS_DIR/libproot-loader.so")
+    have32=$(sha256_of "$JNILIBS_DIR/libproot-loader32.so")
     if [ "$have64" != "$want64" ]; then
         log_error "libproot-loader.so is NOT the vendored Termux build (sha256=${have64:-missing}). Restore: git checkout -- src/android/app/src/main/jniLibs/arm64-v8a/libproot-loader.so"
     fi

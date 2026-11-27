@@ -7,89 +7,142 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ANDROID_PLATFORM: 'android-36'
+  BUILD_TOOLS_VERSION: '35.0.0'
+  NDK_VERSION: '28.0.12433566'
+  CMAKE_VERSION: '3.22.1'
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
-    
+    timeout-minutes: 180
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive
-    
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
-        cache: gradle
-    
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: '1.22'
-    
-    - name: Install gomobile
-      run: |
-        go install golang.org/x/mobile/cmd/gomobile@latest
-        gomobile init
-    
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-    
-    - name: Install NDK
-      run: |
-        echo "y" | sdkmanager "ndk;28.0.12433566"
-        echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/28.0.12433566" >> $GITHUB_ENV
-    
-    - name: Install CMake
-      run: |
-        echo "y" | sdkmanager "cmake;3.22.1"
-    
-    - name: Install build dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential git wget curl
-    
-    - name: Build PRoot
-      run: |
-        cd deps
-        ./build_proot.sh
-    
-    - name: Prepare Android sandbox
-      run: |
-        cd scripts
-        ./prepare_android_sandbox.sh
-    
-    - name: Build Rclone AAR
-      run: |
-        cd deps
-        ./build_rclone_android.sh
-        mkdir -p ../src/android/app/libs
-        cp build/rclone/rclone.aar ../src/android/app/libs/
-    
-    - name: Make Gradlew executable
-      run: chmod +x src/android/gradlew
-    
-    - name: Build APK
-      run: |
-        cd src/android
-        ./gradlew assembleRelease --no-daemon --stacktrace
-    
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      if: success()
-      with:
-        name: openminis-release-apk
-        path: src/android/app/build/outputs/apk/release/*.apk
-        retention-days: 30
-    
-    - name: Upload Debug Symbols
-      uses: actions/upload-artifact@v4
-      if: success()
-      with:
-        name: openminis-release-apk-symbols
-        path: src/android/app/build/outputs/native-debug-symbols/release/*.zip
-        retention-days: 30
-        if-no-files-found: ignore
+      # ------------------------------------------------------------------
+      # Toolchain
+      # ------------------------------------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: gradle
+
+      # The Go version comes from deps/rclone-mobile/go.mod (currently
+      # `go 1.25.5`). Hardcoding an older version here would make
+      # `gomobile bind` for the rclone AAR fail on the module's go directive.
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: deps/rclone-mobile/go.mod
+          cache-dependency-path: deps/rclone-mobile/go.sum
+
+      - name: Install gomobile
+        run: |
+          set -euo pipefail
+          go install golang.org/x/mobile/cmd/gomobile@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          "$(go env GOPATH)/bin/gomobile" init
+
+      # NOTE: android-actions/setup-android@v3 defaulted `packages` to
+      # "tools platform-tools", and `tools` no longer exists in the Android
+      # SDK repository — `sdkmanager tools` fails with "Failed to find
+      # package 'tools'" and the step dies. v4 defaults to platform-tools
+      # only, and the packages this build actually needs are installed
+      # explicitly below.
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools'
+          accept-android-sdk-licenses: true
+
+      - name: Install SDK packages (platform, build-tools, NDK, CMake)
+        run: |
+          set -euo pipefail
+          # setup-android already accepted the licences; keep this idempotent.
+          # `|| true` because `yes` gets SIGPIPE once sdkmanager stops reading,
+          # which would otherwise fail the step under pipefail.
+          (yes | sdkmanager --licenses > /dev/null) || true
+          sdkmanager --install \
+            "platforms;${ANDROID_PLATFORM}" \
+            "build-tools;${BUILD_TOOLS_VERSION}" \
+            "ndk;${NDK_VERSION}" \
+            "cmake;${CMAKE_VERSION}"
+          echo "ANDROID_NDK_HOME=${ANDROID_SDK_ROOT}/ndk/${NDK_VERSION}" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_ROOT=${ANDROID_SDK_ROOT}/ndk/${NDK_VERSION}" >> "$GITHUB_ENV"
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential git wget curl
+
+      # ------------------------------------------------------------------
+      # Native deps packaged into the APK
+      # ------------------------------------------------------------------
+      - name: Build PRoot
+        run: |
+          cd deps
+          ./build_proot.sh
+
+      - name: Prepare Android sandbox
+        run: |
+          cd scripts
+          ./prepare_android_sandbox.sh
+
+      - name: Build Rclone AAR
+        run: |
+          cd deps
+          ./build_rclone_android.sh
+          mkdir -p ../src/android/app/libs
+          cp build/rclone/rclone.aar ../src/android/app/libs/
+
+      # ------------------------------------------------------------------
+      # APK
+      # ------------------------------------------------------------------
+      - name: Make Gradlew executable
+        run: chmod +x src/android/gradlew
+
+      - name: Build APK
+        run: |
+          set -euo pipefail
+          cd src/android
+          # The committed gradle.properties caps the build JVM at 2 g. R8 on
+          # this app needs more headroom on a CI box, so raise it for the
+          # release build only (local builds keep the smaller default).
+          sed -i 's/^org.gradle.jvmargs=.*/org.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8/' gradle.properties
+          ./gradlew assembleRelease --no-daemon --stacktrace \
+            -Pandroid.suppressUnsupportedCompileSdk=36
+
+      - name: Upload APK
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: openminis-release-apk
+          path: |
+            src/android/app/build/outputs/apk/github/release/*.apk
+            src/android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload Debug Symbols
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: openminis-release-apk-symbols
+          path: src/android/app/build/outputs/native-debug-symbols/**/*.zip
+          retention-days: 30
+          if-no-files-found: ignore
