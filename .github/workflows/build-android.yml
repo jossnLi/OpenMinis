@@ -42,13 +42,15 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      # The Go version comes from deps/rclone-mobile/go.mod (currently
-      # `go 1.25.5`). Hardcoding an older version here would make
-      # `gomobile bind` for the rclone AAR fail on the module's go directive.
+      # Two constraints pull in opposite directions: deps/rclone-mobile/go.mod
+      # declares a *minimum* of go 1.25.5, while `gomobile@latest` currently
+      # needs go >= 1.26.0. setup-go exports GOTOOLCHAIN=local, so nothing is
+      # auto-downloaded at build time — the runner toolchain must satisfy both,
+      # hence 1.26.x rather than the go.mod version.
       - name: Set up Go
         uses: actions/setup-go@v7
         with:
-          go-version-file: deps/rclone-mobile/go.mod
+          go-version: '1.26.11'
           cache-dependency-path: deps/rclone-mobile/go.sum
 
       - name: Install gomobile
